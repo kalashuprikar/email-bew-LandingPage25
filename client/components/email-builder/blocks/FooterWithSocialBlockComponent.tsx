@@ -146,7 +146,6 @@ export const FooterWithSocialBlockComponent: React.FC<
               onChange={(e) =>
                 handleFieldChange("enterpriseName", "content", e.target.value)
               }
-              onBlur={() => onElementSelect?.(null)}
               autoFocus
               className="w-full border border-valasys-orange rounded px-2 py-1 text-center"
               style={{
@@ -188,7 +187,6 @@ export const FooterWithSocialBlockComponent: React.FC<
               onChange={(e) =>
                 handleFieldChange("address", "content", e.target.value)
               }
-              onBlur={() => onElementSelect?.(null)}
               autoFocus
               className="w-full border border-valasys-orange rounded px-2 py-1 text-center"
               style={{
@@ -234,7 +232,6 @@ export const FooterWithSocialBlockComponent: React.FC<
               onChange={(e) =>
                 handleFieldChange("subscriptionText", "content", e.target.value)
               }
-              onBlur={() => onElementSelect?.(null)}
               autoFocus
               className="w-full border border-valasys-orange rounded px-2 py-1 text-center"
               style={{
