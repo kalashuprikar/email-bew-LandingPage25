@@ -176,8 +176,8 @@ export const EmailCanvas: React.FC<EmailCanvasProps> = ({
                       onClick={() => setSelectedInlineGroup(groupId)}
                     >
                       <div className={cn(
-                        "flex w-full transition-all",
-                        (isGroupSelected || isGroupHovered) && "ring-2 ring-valasys-orange rounded-lg"
+                        "flex w-full transition-all rounded-lg",
+                        (isGroupSelected || isGroupHovered) && "border-2 border-dashed border-valasys-orange"
                       )}>
                         {inlineBlocks.map((inlineBlock, i) => (
                           <div key={inlineBlock.id} className="flex-1">
@@ -203,6 +203,7 @@ export const EmailCanvas: React.FC<EmailCanvasProps> = ({
                                 onDuplicateBlock?.(blockToDuplicate, position);
                               }}
                               onDelete={(blockId) => onDeleteBlock?.(blockId)}
+                              isPartOfInlineGroup={true}
                             />
                           </div>
                         ))}
