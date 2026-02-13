@@ -1076,14 +1076,14 @@ export function renderBlockToHTML(block: ContentBlock): string {
                 </div>`;
             }
           }
-          return `<div style="width: 48%; display: inline-block; vertical-align: top; padding-right: 10px; box-sizing: border-box;">
-              <div style="background-color: ${card.backgroundColor}; color: ${card.textColor}; border-radius: ${card.borderRadius}px; margin: ${card.margin}px; overflow: hidden; border: none; display: flex; flex-direction: column; height: 400px;">
-                <div style="height: 160px; overflow: hidden; flex-shrink: 0;">
+          return `<div style="width: 48%; display: inline-block; vertical-align: top; padding-right: 10px; box-sizing: border-box; margin-bottom: 20px;">
+              <div style="background-color: ${card.backgroundColor}; color: ${card.textColor}; border-radius: ${card.borderRadius}px; margin: ${card.margin}px; border: none; display: flex; flex-direction: column;">
+                <div style="height: 180px; flex-shrink: 0;">
                   ${imageHtml}
                 </div>
-                <div style="padding: ${contentPadding}px; margin: 0; border: none; flex: 1; overflow: hidden;">
-                  <h3 style="margin: 0 0 8px 0; font-size: 16px; font-weight: bold;">${card.title}</h3>
-                  <p style="margin: 0; font-size: 13px; line-height: 1.4;">${card.description}</p>
+                <div style="padding: ${contentPadding + 8}px; margin: 0; border: none; flex: 1;">
+                  <h3 style="margin: 0 0 10px 0; font-size: 16px; font-weight: bold;">${card.title}</h3>
+                  <p style="margin: 0; font-size: 13px; line-height: 1.5; color: inherit;">${card.description}</p>
                 </div>
               </div>
             </div>`;
