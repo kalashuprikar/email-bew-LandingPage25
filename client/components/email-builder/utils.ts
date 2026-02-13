@@ -555,36 +555,60 @@ export function createFooterWithSocialTemplate(): ContentBlock[] {
 }
 
 export function createFooterWithContactTemplate(): ContentBlock[] {
-  const footerContent = `<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; padding: 30px 20px; margin: 0; border-top: 1px solid #e0e0e0;">
-  <tr>
-    <td style="text-align: left; vertical-align: top; width: 50%; padding-right: 15px;">
-      <h3 style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold; color: #000;">Enterprise name</h3>
-      <p style="margin: 0; font-size: 12px; color: #666; line-height: 1.6;">69 Street Name, 00000, City</p>
-    </td>
-    <td style="text-align: right; vertical-align: top; width: 50%; padding-left: 15px;">
-      <p style="margin: 0 0 8px 0; font-size: 12px; color: #666;">
-        <a href="#" style="color: #666; text-decoration: none;">Privacy</a> |
-        <a href="#" style="color: #666; text-decoration: none;">Terms</a> |
-        <a href="#" style="color: #666; text-decoration: none;">Policy</a>
-      </p>
-      <p style="margin: 0 0 5px 0; font-size: 12px; color: #666;">
-        <a href="mailto:contact@enterprise.com" style="color: #666; text-decoration: none;">contact@enterprise.com</a>
-      </p>
-      <p style="margin: 0; font-size: 12px; color: #666;">
-        <a href="tel:+33901230467" style="color: #666; text-decoration: none;">+33 901 23 04 67</a>
-      </p>
-    </td>
-  </tr>
-  <tr>
-    <td colspan="2" style="padding-top: 15px; border-top: 1px solid #e0e0e0;">
-      <p style="margin: 0; font-size: 11px; color: #999; text-align: center;">
-        <a href="#" style="color: #999; text-decoration: none;">Unsubscribe</a>
-      </p>
-    </td>
-  </tr>
-</table>`;
-
-  return [createHtmlBlock(footerContent)];
+  return [{
+    type: "footer-with-contact",
+    id: generateId(),
+    enterpriseName: {
+      content: "Enterprise name",
+      fontSize: 14,
+      fontColor: "#000000",
+      fontWeight: "bold",
+      fontFamily: "Arial",
+      fontStyle: "normal",
+      padding: 10,
+    },
+    address: {
+      content: "69 Street Name, 00000, City",
+      fontSize: 12,
+      fontColor: "#666666",
+      fontWeight: "normal",
+      fontFamily: "Arial",
+      fontStyle: "normal",
+      padding: 10,
+    },
+    privacyLinks: {
+      content: "Privacy | Terms | Policy",
+      fontSize: 12,
+      fontColor: "#666666",
+      fontWeight: "normal",
+      padding: 10,
+    },
+    email: {
+      content: "contact@enterprise.com",
+      fontSize: 12,
+      fontColor: "#666666",
+      fontWeight: "normal",
+      padding: 10,
+    },
+    phone: {
+      content: "+33 901 23 04 67",
+      fontSize: 12,
+      fontColor: "#666666",
+      fontWeight: "normal",
+      padding: 10,
+    },
+    unsubscribeLink: {
+      text: "Unsubscribe",
+      url: "#",
+      fontSize: 11,
+      fontColor: "#999999",
+      fontWeight: "normal",
+      padding: 10,
+    },
+    backgroundColor: "#ffffff",
+    padding: 30,
+    visibility: "all",
+  } as any];
 }
 
 export function createTopImageSectionTemplate(): ContentBlock[] {
