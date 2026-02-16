@@ -337,31 +337,34 @@ export const LandingPageSettingsPanel: React.FC<
             value={parseInt(localProps.width) || 100}
             onChange={(e) => {
               const unit = (localProps.width || "100%").includes("%") ? "%" : "px";
-              let num = parseInt(e.target.value) || 0;
+              const num = parseInt(e.target.value) || 0;
 
-              // For percentage: enforce max 100
+              // For percentage: only allow up to 100
               if (unit === "%") {
                 if (num > 100) {
                   return; // Don't update if > 100 for %
                 }
               }
 
+              // For pixels: accept any value
               updateProperty("width", `${num}${unit}`);
             }}
-            max={(localProps.width || "100%").includes("%") ? 100 : undefined}
             placeholder="100"
             className="flex-1"
           />
           <select
             value={(localProps.width || "100%").includes("%") ? "%" : "px"}
             onChange={(e) => {
-              const num = parseInt(localProps.width) || 100;
+              const currentNum = parseInt(localProps.width) || 100;
               const unit = e.target.value;
-              // Reset to max 100 if switching from px to %
+
+              // When switching TO percentage, cap at 100
               if (unit === "%") {
-                updateProperty("width", `${Math.min(num, 100)}${unit}`);
+                const cappedNum = Math.min(currentNum, 100);
+                updateProperty("width", `${cappedNum}${unit}`);
               } else {
-                updateProperty("width", `${num}${unit}`);
+                // When switching TO pixels, keep the number as is
+                updateProperty("width", `${currentNum}${unit}`);
               }
             }}
             className="px-3 py-2 border border-input rounded-md bg-background text-sm"
