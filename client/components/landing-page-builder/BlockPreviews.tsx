@@ -258,16 +258,25 @@ export const HeroBlockPreview: React.FC<BlockPreviewProps> = ({
   return (
     <div
       onClick={onSelect}
-      className={`cursor-pointer transition-all border ${
+      className={`cursor-pointer transition-all border bg-cover bg-center relative ${
         isSelected ? "border-valasys-orange" : "border-gray-200"
       }`}
       style={{
         backgroundColor: props.backgroundColor || "#f3f4f6",
+        backgroundImage: props.backgroundImage ? `url(${props.backgroundImage})` : undefined,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         minHeight: props.minHeight || "500px",
         width: props.width || "100%",
       }}
     >
-      <div className="flex flex-col items-center justify-center h-full px-4 md:px-8 py-8 md:py-16 text-center">
+      {props.backgroundImage && props.overlayOpacity > 0 && (
+        <div
+          className="absolute inset-0 bg-black"
+          style={{ opacity: props.overlayOpacity / 100, zIndex: 1 }}
+        />
+      )}
+      <div className="relative flex flex-col items-center justify-center h-full px-4 md:px-8 py-8 md:py-16 text-center" style={{ zIndex: 2 }}>
         {/* Heading */}
         <div
           className={`relative mb-4 px-4 py-2 rounded transition-all ${
