@@ -47,6 +47,36 @@ export const LandingPageSettingsPanel: React.FC<
     }
   };
 
+  const handleSizeKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    key: string,
+    currentValue: string
+  ) => {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      e.preventDefault();
+      const value = currentValue || "0px";
+      const match = value.match(/^(\d+(?:\.\d+)?)(.*)/);
+
+      if (match) {
+        const num = parseFloat(match[1]);
+        const unit = match[2] || "px";
+        const step = unit === "%" ? 5 : 10;
+        const newNum = e.key === "ArrowUp" ? num + step : Math.max(0, num - step);
+        updateProperty(key, `${newNum}${unit}`);
+      }
+    }
+  };
+
+  const toggleUnit = (key: string, currentValue: string, fromUnit: string, toUnit: string) => {
+    const match = currentValue.match(/^(\d+(?:\.\d+)?)(.*)/);
+    if (match) {
+      const num = parseFloat(match[1]);
+      updateProperty(key, `${num}${toUnit}`);
+    } else {
+      updateProperty(key, `100${toUnit}`);
+    }
+  };
+
   // Show element-specific styling UI if an element is selected
   if (selectedElement && block && block.type === "hero") {
     const elementLabels = {
@@ -104,23 +134,73 @@ export const LandingPageSettingsPanel: React.FC<
                   <Label className="text-sm font-medium block mb-3">Size & Spacing</Label>
                   <div>
                     <Label className="text-xs text-gray-600 mb-1 block">Width</Label>
-                    <Input
-                      type="text"
-                      value={localProps.headlineWidth || "100%"}
-                      onChange={(e) => updateProperty("headlineWidth", e.target.value)}
-                      placeholder="100%, 500px, etc."
-                      className="w-full"
-                    />
+                    <div className="flex gap-2">
+                      <Input
+                        type="text"
+                        value={localProps.headlineWidth ?? "100%"}
+                        onChange={(e) => updateProperty("headlineWidth", e.target.value)}
+                        onKeyDown={(e) => handleSizeKeyDown(e, "headlineWidth", localProps.headlineWidth ?? "100%")}
+                        placeholder="100%, 500px, etc."
+                        className="flex-1"
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const current = localProps.headlineWidth ?? "100%";
+                          const hasPercent = current.includes("%");
+                          toggleUnit("headlineWidth", current, hasPercent ? "%" : "px", hasPercent ? "px" : "%");
+                        }}
+                        className="px-2 text-xs"
+                      >
+                        {(localProps.headlineWidth ?? "100%").includes("%") ? "px" : "%"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updateProperty("headlineWidth", "100%")}
+                        className="px-3"
+                      >
+                        Reset
+                      </Button>
+                    </div>
                   </div>
                   <div className="mt-3">
                     <Label className="text-xs text-gray-600 mb-1 block">Height</Label>
-                    <Input
-                      type="text"
-                      value={localProps.headlineHeight || "auto"}
-                      onChange={(e) => updateProperty("headlineHeight", e.target.value)}
-                      placeholder="auto, 200px, etc."
-                      className="w-full"
-                    />
+                    <div className="flex gap-2">
+                      <Input
+                        type="text"
+                        value={localProps.headlineHeight ?? "auto"}
+                        onChange={(e) => updateProperty("headlineHeight", e.target.value)}
+                        onKeyDown={(e) => handleSizeKeyDown(e, "headlineHeight", localProps.headlineHeight ?? "auto")}
+                        placeholder="auto, 200px, etc."
+                        className="flex-1"
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const current = localProps.headlineHeight ?? "auto";
+                          if (current === "auto") {
+                            updateProperty("headlineHeight", "100px");
+                          } else {
+                            const hasPercent = current.includes("%");
+                            toggleUnit("headlineHeight", current, hasPercent ? "%" : "px", hasPercent ? "px" : "%");
+                          }
+                        }}
+                        className="px-2 text-xs"
+                      >
+                        {(localProps.headlineHeight ?? "auto") === "auto" ? "px/%" : (localProps.headlineHeight ?? "auto").includes("%") ? "px" : "%"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updateProperty("headlineHeight", "auto")}
+                        className="px-3"
+                      >
+                        Reset
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </>
@@ -158,23 +238,73 @@ export const LandingPageSettingsPanel: React.FC<
                   <Label className="text-sm font-medium block mb-3">Size & Spacing</Label>
                   <div>
                     <Label className="text-xs text-gray-600 mb-1 block">Width</Label>
-                    <Input
-                      type="text"
-                      value={localProps.subheadingWidth || "100%"}
-                      onChange={(e) => updateProperty("subheadingWidth", e.target.value)}
-                      placeholder="100%, 500px, etc."
-                      className="w-full"
-                    />
+                    <div className="flex gap-2">
+                      <Input
+                        type="text"
+                        value={localProps.subheadingWidth ?? "100%"}
+                        onChange={(e) => updateProperty("subheadingWidth", e.target.value)}
+                        onKeyDown={(e) => handleSizeKeyDown(e, "subheadingWidth", localProps.subheadingWidth ?? "100%")}
+                        placeholder="100%, 500px, etc."
+                        className="flex-1"
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const current = localProps.subheadingWidth ?? "100%";
+                          const hasPercent = current.includes("%");
+                          toggleUnit("subheadingWidth", current, hasPercent ? "%" : "px", hasPercent ? "px" : "%");
+                        }}
+                        className="px-2 text-xs"
+                      >
+                        {(localProps.subheadingWidth ?? "100%").includes("%") ? "px" : "%"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updateProperty("subheadingWidth", "100%")}
+                        className="px-3"
+                      >
+                        Reset
+                      </Button>
+                    </div>
                   </div>
                   <div className="mt-3">
                     <Label className="text-xs text-gray-600 mb-1 block">Height</Label>
-                    <Input
-                      type="text"
-                      value={localProps.subheadingHeight || "auto"}
-                      onChange={(e) => updateProperty("subheadingHeight", e.target.value)}
-                      placeholder="auto, 100px, etc."
-                      className="w-full"
-                    />
+                    <div className="flex gap-2">
+                      <Input
+                        type="text"
+                        value={localProps.subheadingHeight ?? "auto"}
+                        onChange={(e) => updateProperty("subheadingHeight", e.target.value)}
+                        onKeyDown={(e) => handleSizeKeyDown(e, "subheadingHeight", localProps.subheadingHeight ?? "auto")}
+                        placeholder="auto, 100px, etc."
+                        className="flex-1"
+                      />
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const current = localProps.subheadingHeight ?? "auto";
+                          if (current === "auto") {
+                            updateProperty("subheadingHeight", "100px");
+                          } else {
+                            const hasPercent = current.includes("%");
+                            toggleUnit("subheadingHeight", current, hasPercent ? "%" : "px", hasPercent ? "px" : "%");
+                          }
+                        }}
+                        className="px-2 text-xs"
+                      >
+                        {(localProps.subheadingHeight ?? "auto") === "auto" ? "px/%" : (localProps.subheadingHeight ?? "auto").includes("%") ? "px" : "%"}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updateProperty("subheadingHeight", "auto")}
+                        className="px-3"
+                      >
+                        Reset
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </>
